@@ -1,0 +1,7 @@
+## Interface: 16001
+## Title: Cat Mana Cleaner
+## Notes: Hides alternate-power text and adjusts its alignment on the Forever beta player frame.
+## Author: Personal addon
+## Version: 1.0.2
+## Dependencies: BetterBlizzFrames
+CatManaCleaner.lua
