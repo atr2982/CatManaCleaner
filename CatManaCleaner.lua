@@ -41,13 +41,16 @@ local function ApplyTextVisibility(bar)
 end
 
 local function AdjustManaBarGeometry(bar)
-    if not bar or bar.CatManaCleanerGeometryV7 then return end
+    if not bar or bar.CatManaCleanerGeometryV8 then return end
 
-    local reference = _G.PlayerFrame
+    local playerMain = _G.PlayerFrame
         and _G.PlayerFrame.PlayerFrameContent
         and _G.PlayerFrame.PlayerFrameContent.PlayerFrameContentMain
-        and _G.PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.ManaBarArea
-        and _G.PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.ManaBarArea.ManaBar
+    local reference = playerMain
+        and playerMain.ManaBarArea
+        and playerMain.ManaBarArea.ManaBar
+    local healthReference = playerMain
+        and playerMain.HealthBarsContainer
 
     if reference and reference:GetHeight() > 0 then
         local classicFrames = _G.BetterBlizzFramesDB and _G.BetterBlizzFramesDB.classicFrames
@@ -59,18 +62,25 @@ local function AdjustManaBarGeometry(bar)
         else
             bar:SetPoint("BOTTOMLEFT", _G.PlayerFrame, "BOTTOMLEFT", 87, 18)
         end
-        -- Match the neighboring bar's exact width.
-        bar:SetWidth(reference:GetWidth())
+        -- Match the shorter of the native health and mana bars. The Forever
+        -- alt bar's texture draws one pixel past the native bar at equal frame
+        -- widths, so leave a one-pixel visual inset on the right edge.
+        local referenceWidth = reference:GetWidth()
+        if healthReference and healthReference:GetWidth() > 0 then
+            referenceWidth = math.min(referenceWidth, healthReference:GetWidth())
+        end
+        bar:SetWidth(math.max(1, referenceWidth - 1))
         bar:SetHeight(math.max(1, reference:GetHeight() - 1))
     else
         local point, relativeTo, relativePoint, xOffset, yOffset = bar:GetPoint(1)
         if not point then return end
         bar:ClearAllPoints()
         bar:SetPoint(point, relativeTo, relativePoint, (xOffset or 0) + 1, yOffset or 0)
+        bar:SetWidth(math.max(1, bar:GetWidth() - 1))
         bar:SetHeight(math.max(1, bar:GetHeight() - 1))
     end
 
-    bar.CatManaCleanerGeometryV7 = true
+    bar.CatManaCleanerGeometryV8 = true
 end
 
 local function GetAltManaBar()
