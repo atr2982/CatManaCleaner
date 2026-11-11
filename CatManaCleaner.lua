@@ -41,7 +41,7 @@ local function ApplyTextVisibility(bar)
 end
 
 local function AdjustManaBarGeometry(bar)
-    if not bar or bar.CatManaCleanerGeometryV9 then return end
+    if not bar or bar.CatManaCleanerGeometryV10 then return end
 
     local playerMain = _G.PlayerFrame
         and _G.PlayerFrame.PlayerFrameContent
@@ -53,13 +53,13 @@ local function AdjustManaBarGeometry(bar)
         -- Preserve the custom bar's original lower-row placement.
         -- Restore the earlier two-pixel-right placement that looked better.
         if classicFrames then
-            bar:SetPoint("BOTTOMLEFT", _G.PlayerFrame, "BOTTOMLEFT", 97, 17)
+            bar:SetPoint("BOTTOMLEFT", _G.PlayerFrame, "BOTTOMLEFT", 96.5, 16.5)
         else
-            bar:SetPoint("BOTTOMLEFT", _G.PlayerFrame, "BOTTOMLEFT", 87, 18)
+            bar:SetPoint("BOTTOMLEFT", _G.PlayerFrame, "BOTTOMLEFT", 86.5, 17.5)
         end
         -- Use a fixed width matching BetterBlizzFrames' Forever bar geometry,
         -- with a one-pixel inset so the alt bar's texture ends cleanly.
-        bar:SetWidth(classicFrames and 103 or 123)
+        bar:SetWidth(classicFrames and 104.5 or 124.5)
         bar:SetHeight(math.max(1, playerMain.ManaBarArea.ManaBar:GetHeight() - 1))
     else
         local point, relativeTo, relativePoint, xOffset, yOffset = bar:GetPoint(1)
@@ -70,7 +70,7 @@ local function AdjustManaBarGeometry(bar)
         bar:SetHeight(math.max(1, bar:GetHeight() - 1))
     end
 
-    bar.CatManaCleanerGeometryV9 = true
+    bar.CatManaCleanerGeometryV10 = true
 end
 
 local function GetAltManaBar()
