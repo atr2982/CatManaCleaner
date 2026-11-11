@@ -2,4 +2,6 @@
 
 A tiny WoW: Forever UI cleanup addon for the alternate-power text shown by BetterBlizzFrames while shapeshifted. It leaves the bar and the rest of the player frame alone.
 
+Requires the BetterBlizzFrames addon from CurseForge.
+
 Commands: `/catmana hide`, `/catmana show`, and `/catmana text`.
